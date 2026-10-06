@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connecting — Laman Companion</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+         max-width: 34rem; margin: 4rem auto; padding: 0 1.25rem; line-height: 1.6; }
+  .ok { color: #1e7a5f; font-weight: 600; }
+  .err { color: #c0392b; font-weight: 600; }
+</style>
+</head>
+<body>
+  <p id="msg">Connecting to Laman Companion…</p>
+
+  <script>
+  (function () {
+    var msg = document.getElementById('msg');
+    var q = window.location.search;
+
+    if (!q || q.length < 2) {
+      msg.className = 'err';
+      msg.textContent = 'No authorization response received. You can close this tab and retry.';
+      return;
+    }
+
+    // TikTok sent the code here (HTTPS). Forward it to the local listener.
+    var target = 'http://localhost:8765/callback' + q;
+
+    msg.className = 'ok';
+    msg.textContent = 'Authorized. Forwarding to the local app — you can close this tab.';
+
+    window.location.replace(target);
+  })();
+  </script>
+</body>
+</html>
